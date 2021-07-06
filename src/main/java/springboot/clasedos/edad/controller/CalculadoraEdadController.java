@@ -14,16 +14,8 @@ import javax.validation.Valid;
 @RestController
 public class CalculadoraEdadController {
 
-  @Autowired
-  private YearValidator yearValidator;
-
-  @InitBinder
-  public void initMerchantOnlyBinder(WebDataBinder binder) {
-    binder.addValidators(yearValidator);
-  }
-
   @GetMapping("/calcularedad/{year}/{month}/{day}")
-  public int calcularEdad(@Valid @PathVariable int year, @PathVariable int month, @PathVariable int day){
+  public int calcularEdad(@PathVariable int year, @PathVariable int month, @PathVariable int day){
   return CalculadoraEdad.calcularEdad(year, month, day);
   }
 }

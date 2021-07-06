@@ -3,6 +3,7 @@ package springboot.clasedos.metroscuadrados.model;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Casa {
   private String nombre;
   private String direccion;
   @NotEmpty(message = "La casa debe tener habitaciones")
+  @Valid
   private List<Habitacion> habitaciones;
 
   public Casa(String nombre, String direccion, List<Habitacion> habitaciones) {
