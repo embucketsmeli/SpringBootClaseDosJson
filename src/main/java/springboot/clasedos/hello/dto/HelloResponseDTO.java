@@ -9,4 +9,9 @@ class HelloResponseDTO {
   public HelloResponseDTO(String name) {
     this.name = name;
   }
+
+
+  public HelloResponseDTO(String name, String saveHello) {
+    this.name = name;
+  }
 }

@@ -10,15 +10,15 @@ import java.util.List;
 @Validated
 public class HelloRequestDTO {
 
-  @Max(message = "menor a 100", value = 100)
-  @Min(message = "mayor a 10", value = 10)
+  @Max(message = "debe ser menor a 100", value = 100)
+  @Min(message = "debe ser mayor a 10", value = 10)
   private Long id;
-  @NotNull(message = "El dni es nulo")
+  @NotNull(message = "El dni no debe ser nulo")
   private String dni;
 
-  @NotBlank(message = "el nombre es vacio")
+  @NotBlank(message = "el nombre no debe estar vacio")
   private String name;
 
-  @NotEmpty(message = "la coleccion esta vacio")
+  @NotEmpty(message = "la coleccion no debe estar vacio")
   private List<String> lastName;
 }
