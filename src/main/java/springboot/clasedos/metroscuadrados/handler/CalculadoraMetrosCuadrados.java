@@ -1,29 +1,25 @@
 package springboot.clasedos.metroscuadrados.handler;
 
-import springboot.clasedos.metroscuadrados.model.Casa;
-import springboot.clasedos.metroscuadrados.model.Habitacion;
+import org.springframework.stereotype.Service;
+import springboot.clasedos.metroscuadrados.dto.PriceDTO;
+import springboot.clasedos.metroscuadrados.repositories.PriceRepository;
+import springboot.clasedos.metroscuadrados.service.CalcularMetrosCuadrados;
 
-import java.util.Comparator;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-public class CalculadoraMetrosCuadrados {
+@Service
+public class CalculadoraMetrosCuadrados implements CalcularMetrosCuadrados {
 
-  private final static int VALOR_METRO_CUADRADO_DOLARES = 800;
+  private final static double VALOR_METRO_CUADRADO_DOLARES = 800;
+  private final PriceRepository priceRepository;
 
-  public static double calcularValor(Casa casa) {
-    return calcularTotalMetrosCuadrados(casa) * VALOR_METRO_CUADRADO_DOLARES;
+  public CalculadoraMetrosCuadrados(PriceRepository priceRepository) {
+    this.priceRepository = priceRepository;
   }
 
-  public static double calcularTotalMetrosCuadrados(Casa casa) {
-    return casa.getHabitaciones().stream().mapToDouble(Habitacion::getMetrosCuadrados).sum();
-  }
-
-  public static Habitacion getHabitacionMasGrande(Casa casa) {
-    return casa.getHabitaciones().stream().max(Comparator.comparingDouble(Habitacion::getMetrosCuadrados)).get();
-  }
-
-  public static Map<Habitacion, Double> calcularMetrosCaudradosPorHabitacion(Casa casa) {
-    return casa.getHabitaciones().stream().collect(Collectors.toMap(entry -> entry, entry -> entry.getMetrosCuadrados()));
+  @Override
+  public double getValorMetroCuadrado(String location) {
+    Optional<PriceDTO> locationPrice = priceRepository.getLocationPrice(location);
+    return locationPrice.isPresent() ? locationPrice.get().getPrice() : VALOR_METRO_CUADRADO_DOLARES;
   }
 }

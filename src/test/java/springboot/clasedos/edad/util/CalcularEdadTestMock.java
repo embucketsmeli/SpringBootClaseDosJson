@@ -21,12 +21,19 @@ public class CalcularEdadTestMock {
   private MockMvc mockMvc;
 
   @Test
-  public void calcularEdad() throws Exception {
+  public void calcularEdadValida() throws Exception {
     String query = String.format("/calcularedad/%d/%d/%d", 1993, 5, 22);
     this.mockMvc.perform(get(query)).
             andDo(print()).
             andExpect(status().isOk()).
             andExpect(content().json("28"));
+  }
 
+  @Test
+  public void calcularEdadInvalida() throws Exception {
+    String query = String.format("/calcularedad/%d/%d/%d", 0, 0, 0);
+    this.mockMvc.perform(get(query)).
+            andDo(print()).
+            andExpect(status().isBadRequest());
   }
 }
